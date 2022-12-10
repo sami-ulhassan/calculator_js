@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/styles.css">
+    <script src="./assets/script.js" defer></script>
+    <title>Calculator</title>
+</head>
+<body>
+    <main class="main-container">
+
+        <section class="calculator-container">
+            <div class="input-container">
+                <span class="input-field"></span>
+            </div>
+
+            <div class="btn-container">
+
+                <div class="left-container">
+                    <div class="clear-btns-container">
+                        <button class="clear-btn btn-primary" id="clearAll">AC</button>
+                        <button class="clear-btn btn-primary" id="clearCurrent">C</button>
+                        <button class="clear-btn btn-primary" id="backspace">
+                            <img src="./assets/images/backspace.png" alt="Backspace">
+                        </button>
+                    </div>
+                    <div class="numbers-container">
+                        <button class="number-btn btn-primary" data-value="7">7</button>
+                        <button class="number-btn btn-primary" data-value="8">8</button>
+                        <button class="number-btn btn-primary" data-value="9">9</button>
+                        <button class="number-btn btn-primary" data-value="4">4</button>
+                        <button class="number-btn btn-primary" data-value="5">5</button>
+                        <button class="number-btn btn-primary" data-value="6">6</button>
+                        <button class="number-btn btn-primary" data-value="1">1</button>
+                        <button class="number-btn btn-primary" data-value="2">2</button>
+                        <button class="number-btn btn-primary" data-value="3">3</button>
+                        <button class="number-btn btn-primary zero-btn" data-value="0">0</button>
+                        <button class="number-btn btn-primary" data-value="." id="decimal">.</button>
+                    </div>
+                </div>
+                
+                <div class="right-container">
+                    <div class="operators-container">
+                        <button class="operator-btn btn-primary" data-value="/">÷</button>
+                        <button class="operator-btn btn-primary" data-value="*">&#215;</button>
+                        <button class="operator-btn btn-primary" data-value="-">-</button>
+                        <button class="operator-btn btn-primary" data-value="+">+</button>
+                        <button class="operator-btn btn-primary" data-value="=">=</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</body>
+</html>
