@@ -5,7 +5,7 @@ body {
     font-family: 'Roboto', sans-serif !important;
 }
 
-.d-none{
+.d-none {
     display: none;
 }
 
@@ -21,7 +21,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    width: 22%;
+    width: 445px;
     height: 80vh;
     border-radius: 40px;
     border: 2px solid #ddd;
@@ -78,7 +78,7 @@ body {
     margin: 0 15px 15px 0;
 }
 
-.clear-btn:hover{
+.clear-btn:hover {
     background-color: #646464;
     color: #fff;
 }
@@ -114,7 +114,7 @@ body {
 }
 
 .operator-btn.active,
-.operator-btn:hover{
+.operator-btn:hover {
     background-color: #fff;
     color: #FF9F0A;
 }
@@ -127,7 +127,7 @@ body {
     font-weight: 400;
 }
 
-.number-btn:hover{
+.number-btn:hover {
     background-color: #242323;
 }
 
@@ -136,4 +136,25 @@ body {
     border-radius: 50px;
     text-align: left;
     padding: 10px 37px;
+}
+
+@media screen and (max-width: 1087px) and (min-width: 800px) {
+    .calculator-container {
+        width: 385px;
+    }
+    .btn-primary {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+@media screen and (max-width: 550px) and (min-width: 400px) {
+    .calculator-container {
+        width: 345px;
+        height: 70vh;
+    }
+    .btn-primary {
+        width: 70px;
+        height: 70px;
+    }
 }

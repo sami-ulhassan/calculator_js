@@ -24,9 +24,7 @@ clearAllElem.addEventListener("click", () => {
     isDecimal = false;
     const decimalEl = document.querySelector("#decimal")
     decimalEl.disabled = false;
-    displayEl.innerHTML = "";
-    displayEl.insertAdjacentText('afterbegin', 0);
-
+    updateDisplay(0);
 });
 
 clearCurrentElem.addEventListener("click", () => {
@@ -44,30 +42,22 @@ clearCurrentElem.addEventListener("click", () => {
     const decimalEl = document.querySelector("#decimal")
     decimalEl.disabled = false;
 
-    displayEl.innerHTML = "";
-    displayEl.insertAdjacentText('afterbegin', 0);
+    updateDisplay(0);
 
 });
 
 backspaceElem.addEventListener("click", () => {
     if (!isOperator) {
         firstNumberList.pop();
-        console.log("first Number list", firstNumberList);
         firstNumber = firstNumberList.join("");
-        console.log("first number", firstNumber);
 
-        displayEl.innerHTML = "";
-        displayEl.insertAdjacentText('afterbegin', firstNumber);
+        updateDisplay(firstNumber);
     }
     else {
         secondNumberList.pop();
-        console.log("second Number list", secondNumberList);
-
         secondNumber = secondNumberList.join("");
-        console.log("second number", secondNumber);
 
-        displayEl.innerHTML = "";
-        displayEl.insertAdjacentText('afterbegin', secondNumber);
+        updateDisplay(secondNumber);
     }
 
 })
@@ -87,70 +77,67 @@ numberElems.forEach(el => {
                 firstNumber = 0;
                 firstNumberList = [];
             }
-            firstNumberList.push(e.target.dataset.value);
-            console.log("first Number list", firstNumberList);
-            firstNumber = firstNumberList.join("");
-            console.log("first number", firstNumber);
 
-            displayEl.innerHTML = "";
-            displayEl.insertAdjacentText('afterbegin', firstNumber);
+            let result = handleInputs(firstNumberList, e.target.dataset.value);
+            firstNumber = result.number;
+            firstNumberList = result.numberList;
+            updateDisplay(firstNumber);
         }
         else {
 
             const activeOperatorEl = document.querySelector(".operator-btn.active");
             if (activeOperatorEl) activeOperatorEl.classList.toggle("active")
 
-            secondNumberList.push(e.target.dataset.value);
-            console.log("second Number list", secondNumberList);
-
-            secondNumber = secondNumberList.join("");
-            console.log("second number", secondNumber);
-
-            displayEl.innerHTML = "";
-            displayEl.insertAdjacentText('afterbegin', secondNumber);
+            let result = handleInputs(secondNumberList, e.target.dataset.value);
+            secondNumber = result.number;
+            secondNumberList = result.numberList;
+            updateDisplay(secondNumber);
         }
     })
 });
 
 operatorElems.forEach(el => {
     el.addEventListener("click", function (e) {
-        isDecimal = false;
-        const decimalEl = document.querySelector("#decimal")
-        decimalEl.disabled = false;
+        if (firstNumber) {
+            isDecimal = false;
+            const decimalEl = document.querySelector("#decimal")
+            decimalEl.disabled = false;
 
-        if (e.target.dataset.value !== "=") {
-            isOperator = true;
-            operatorValue = e.target.dataset.value;
-            el.classList.add("active");
+            if (isOperator && (firstNumber && secondNumber) && e.target.dataset.value !== "=") {
+                operateNumbers(operatorValue, firstNumber, secondNumber)
+            }
+
+            if (e.target.dataset.value !== "=") {
+                isOperator = true;
+                operatorValue = e.target.dataset.value;
+                el.classList.add("active");
+            }
+            else if (e.target.dataset.value == "=") {
+                operateNumbers(operatorValue, firstNumber, secondNumber)
+            }
         }
-        else {
-            operateNumbers(operatorValue, firstNumber, secondNumber)
-        }
+
     })
 });
 
 let addNumbers = (firstNumber, secondNumber) => {
     let result = Number(firstNumber) + Number(secondNumber);
     appendResult(result);
-    console.log("result ==", result);
 }
 
 let subtractNumbers = (firstNumber, secondNumber) => {
     let result = Number(firstNumber) - Number(secondNumber);
     appendResult(result);
-    console.log("result ==", result);
 }
 
 let multiplyNumbers = (firstNumber, secondNumber) => {
     let result = Number(firstNumber) * Number(secondNumber);
     appendResult(result);
-    console.log("result ==", result);
 }
 
 let divideNumbers = (firstNumber, secondNumber) => {
     let result = Number(firstNumber) / Number(secondNumber);
     appendResult(result);
-    console.log("result ==", result);
 }
 
 let operateNumbers = (operator, firstNumber, secondNumber) => {
@@ -173,12 +160,36 @@ let operateNumbers = (operator, firstNumber, secondNumber) => {
     }
 }
 
+let handleInputs = (numberList, inputValue) => {
+    numberList.push(inputValue);
+    numberList = formatZeros(numberList);
+    let number = numberList.join("");
+
+    return {number, numberList};
+}
+
+let formatResult = (rawResult) => {
+    return (Math.round((Number(rawResult) + Number.EPSILON) * 1000000) / 1000000);
+}
+
+let formatZeros = (numberList) => {
+    if (numberList && numberList[0] == "0" && numberList[1] == "0") {
+        return ["0"];
+    }
+    return numberList;
+}
+
+let updateDisplay = (number) => {
+    displayEl.textContent = "";
+    displayEl.insertAdjacentText('afterbegin', number);
+}
+
 let appendResult = (result) => {
     isResult = true;
     firstNumber = result;
+    let formattedResult = formatResult(result);
     secondNumberList = [];
     isOperator = false;
-    displayEl.innerHTML = "";
-    displayEl.insertAdjacentText('afterbegin', result);
-
+    updateDisplay(formattedResult);
 }
+
